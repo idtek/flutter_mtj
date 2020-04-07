@@ -60,7 +60,7 @@ public class FluttermtjPlugin implements FlutterPlugin, MethodCallHandler {
         StatService.setAppKey(appId);
         break;
       case "SetDebug":
-        Log.d(TAG,"setup :" + call.arguments);
+        // Log.d(TAG,"setup :" + call.arguments);
         boolean debug = (boolean)map.get("debug");
         StatService.setDebugOn(debug);
         break;
@@ -136,12 +136,6 @@ public class FluttermtjPlugin implements FlutterPlugin, MethodCallHandler {
         result.notImplemented();
         break;
     }
-  }
-
-  private String isNullToEmpty (String data) {
-    if (data == null)
-      data = "";
-    return data;
   }
 
   @Override
