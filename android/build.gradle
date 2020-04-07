@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0'
+        classpath 'com.android.tools.build:gradle:3.1.2'
     }
 }
 
@@ -31,4 +31,11 @@ android {
     lintOptions {
         disable 'InvalidPackage'
     }
+}
+
+dependencies {
+    implementation files('src/libs/Baidu_Mtj_android_3.9.8.3.jar')
+    compileOnly files('src/libs/flutter.jar')
+    implementation files('lib/Baidu_Mtj_android_3.9.8.3.jar')
+    implementation files('lib/flutter.jar')
 }
