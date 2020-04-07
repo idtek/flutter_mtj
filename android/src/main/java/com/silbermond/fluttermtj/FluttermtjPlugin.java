@@ -92,7 +92,7 @@ public class FluttermtjPlugin implements FlutterPlugin, MethodCallHandler {
           String eventId = (String) map.get("eventId");
           eventId = eventId == null ? "" : eventId;
           Map<String, String> attr = (Map<String, String>) map.get("attributes");
-          attr = attr == null ? new HashMap<>() : attr;
+          attr = attr == null ? new HashMap<String, String>() : attr;
           StatService.onEvent(registrar.context(), eventId, "LogEventWithOneSecondAndAttributes",1,attr );
         }
         break;
@@ -100,7 +100,7 @@ public class FluttermtjPlugin implements FlutterPlugin, MethodCallHandler {
         String eventId = (String) map.get("eventId");
         eventId = eventId == null ? "" : eventId;
         Map<String, String> attr = (Map<String, String>) map.get("attributes");
-        attr = attr == null ? new HashMap<>() : attr;
+        attr = attr == null ? new HashMap<String, String>() : attr;
         StatService.onEventDuration(registrar.context(), eventId, "LogEventWithDurationTimeAndAttributes", 1000, attr);
       }
       case "LogEventWithDurationTimeAndAttributes":
@@ -108,7 +108,7 @@ public class FluttermtjPlugin implements FlutterPlugin, MethodCallHandler {
           String eventId = (String) map.get("eventId");
           eventId = eventId == null ? "" : eventId;
           Map<String, String> attr = (Map<String, String>) map.get("attributes");
-          attr = attr == null ? new HashMap<>() : attr;
+          attr = attr == null ? new HashMap<String, String>() : attr;
           if (!eventAttributeState) {
             eventAttributeState = true;
             StatService.onEventStart(registrar.context(), eventId, "LogEventWithDurationTimeAndAttributes");

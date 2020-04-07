@@ -34,8 +34,6 @@ android {
 }
 
 dependencies {
-    implementation files('src/libs/Baidu_Mtj_android_3.9.8.3.jar')
-    compileOnly files('src/libs/flutter.jar')
     implementation files('lib/Baidu_Mtj_android_3.9.8.3.jar')
     implementation files('lib/flutter.jar')
 }
