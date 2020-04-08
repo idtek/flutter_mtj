@@ -1,12 +1,16 @@
 package com.silbermond.fluttermtj;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.baidu.mobstat.SendStrategyEnum;
 import com.baidu.mobstat.StatService;
 
+import org.json.JSONObject;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
@@ -53,32 +57,37 @@ public class FluttermtjPlugin implements FlutterPlugin, MethodCallHandler {
     channel.setMethodCallHandler(new FluttermtjPlugin());
   }
 
+  public FluttermtjPlugin() {
+
+  }
+
+  private FluttermtjPlugin(Registrar registrar) {
+    mContext = registrar.context();
+  }
+
   @Override
   public void onMethodCall( MethodCall call, Result result) {
-    HashMap<String, Object> map = call.arguments();
+    List list = (List) call.arguments;
     switch (call.method) {
       case "getPlatformVersion":
         result.success("Android " + android.os.Build.VERSION.RELEASE);
         break;
       case "StartBaiduMobileStat":
-        String appId = (String) map.get("appId");
+        String appId = (String) list.get(0);
         appId = appId == null ? "" : appId;
         StatService.setAppKey(appId);
         break;
       case "SetDebug":
-        // Log.d(TAG,"setup :" + call.arguments);
-        boolean debug = (boolean)map.get("debug");
-        StatService.setDebugOn(debug);
+        StatService.setDebugOn((boolean)list.get(0));
         break;
       case "LogEvent": {
-        String eventId = (String) map.get("eventId");
+        String eventId = (String) list.get(0);
         eventId = eventId == null ? "" : eventId;
-        StatService.onEvent(mContext, eventId, "LogEvent");
+        StatService.onEvent(mContext,eventId, "LogEvent");
         break;
       }
       case "LogEventWithDurationTime": {
-        String eventId = (String) map.get("eventId");
-        eventId = eventId == null ? "" : eventId;
+        String eventId = (String) list.get(0);
         if (!eventState) {
           eventState = true;
           StatService.onEventStart(mContext, eventId, "LogEventWithDurationTime");
@@ -88,32 +97,32 @@ public class FluttermtjPlugin implements FlutterPlugin, MethodCallHandler {
         }}
       break;
       case "LogEventWithOneSecond": {
-        String eventId = (String) map.get("eventId");
+        String eventId = (String) list.get(0);
         eventId = eventId == null ? "" : eventId;
         StatService.onEventDuration(mContext,eventId, "LogEventWithOneSecond", 1000);
       }
       break;
       case "LogEventWithAttribute":
       {
-        String eventId = (String) map.get("eventId");
+        String eventId = (String) list.get(0);
         eventId = eventId == null ? "" : eventId;
-        Map<String, String> attr = (Map<String, String>) map.get("attributes");
+        Map<String, String> attr = (Map<String, String>) list.get(1);
         attr = attr == null ? new HashMap<String, String>() : attr;
-        StatService.onEvent(mContext, eventId, "LogEventWithOneSecondAndAttributes",1,attr );
+        StatService.onEvent(mContext, eventId, "LogEventWithOneSecondAndAttributes",1, attr);
       }
       break;
       case "LogEventWithOneSecondAndAttributes": {
-        String eventId = (String) map.get("eventId");
+        String eventId = (String) list.get(0);
         eventId = eventId == null ? "" : eventId;
-        Map<String, String> attr = (Map<String, String>) map.get("attributes");
+        Map<String, String> attr = (Map<String, String>) list.get(1);
         attr = attr == null ? new HashMap<String, String>() : attr;
         StatService.onEventDuration(mContext, eventId, "LogEventWithDurationTimeAndAttributes", 1000, attr);
       }
       case "LogEventWithDurationTimeAndAttributes":
       {
-        String eventId = (String) map.get("eventId");
+        String eventId = (String)list.get(0);
         eventId = eventId == null ? "" : eventId;
-        Map<String, String> attr = (Map<String, String>) map.get("attributes");
+        Map<String, String> attr = (Map<String, String>) list.get(1);
         attr = attr == null ? new HashMap<String, String>() : attr;
         if (!eventAttributeState) {
           eventAttributeState = true;
@@ -126,14 +135,14 @@ public class FluttermtjPlugin implements FlutterPlugin, MethodCallHandler {
       break;
       case "PageviewStartWithName":
       {
-        String pageName = (String) map.get("pageName");
+        String pageName = (String) list.get(0);
         pageName = pageName == null ? "" : pageName;
         StatService.onPageStart(mContext, pageName);
       }
       break;
       case "PageviewEndWithName":
       {
-        String pageName = (String) map.get("pageName");
+        String pageName = (String) list.get(0);
         pageName = pageName == null ? "" : pageName;
         StatService.onPageEnd(mContext, pageName);
       }
@@ -143,4 +152,5 @@ public class FluttermtjPlugin implements FlutterPlugin, MethodCallHandler {
         break;
     }
   }
+
 }
