@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 
 class Fluttermtj {
   static const MethodChannel _channel =
-      const MethodChannel('flutter_mtj');
+      const MethodChannel('fluttermtj');
 
   static Future<String> get platformVersion async {
     final String version = await _channel.invokeMethod('getPlatformVersion');
