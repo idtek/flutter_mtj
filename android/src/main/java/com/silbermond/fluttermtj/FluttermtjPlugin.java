@@ -54,7 +54,7 @@ public class FluttermtjPlugin implements FlutterPlugin, MethodCallHandler {
   // in the same class.
   public static void registerWith(Registrar registrar) {
     final MethodChannel channel = new MethodChannel(registrar.messenger(), "fluttermtj");
-    channel.setMethodCallHandler(new FluttermtjPlugin());
+    channel.setMethodCallHandler(new FluttermtjPlugin(registrar));
   }
 
   public FluttermtjPlugin() {
@@ -75,7 +75,9 @@ public class FluttermtjPlugin implements FlutterPlugin, MethodCallHandler {
       case "StartBaiduMobileStat":
         String appId = (String) list.get(0);
         appId = appId == null ? "" : appId;
+        Log.i(TAG, "onMethodCall: 设置appkey====" + appId + mContext);
         StatService.setAppKey(appId);
+        StatService.start(mContext);
         break;
       case "SetDebug":
         StatService.setDebugOn((boolean)list.get(0));
