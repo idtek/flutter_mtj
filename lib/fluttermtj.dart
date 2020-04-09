@@ -37,6 +37,13 @@ class Fluttermtj {
     List<dynamic> params = [eventId];
     _channel.invokeMethod('LogEventWithDurationTime', params);
   }
+
+  // 指定事件触发次数
+  static void LogEventWithNumberOfTime(String eventId, int time) {
+    assert(eventId != null);
+    List<dynamic> params = [eventId, time];
+    _channel.invokeMethod('LogEventWithNumberOfTime', params);
+  }
   
   static void LogEventWithOneSecond(String eventId) {
     assert(eventId != null);
