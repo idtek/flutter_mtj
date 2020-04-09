@@ -1,18 +1,18 @@
 #import "FluttermtjPlugin.h"
 #import "BaiduMobStat.h"
 
-static NSString* const StartBaiduMobileStat = @"startBaiduMobileStat";
-static NSString* const SetDebug = @"setDebug";
-static NSString* const LogEvent = @"logEvent";
-static NSString* const LogEventWithDurationTime = @"logEventWithDurationTime";
-static NSString* const LogEventWithOneSecond = @"logEventWithOneSecond";
-static NSString* const LogEventWithAttribute = @"logEventWithAttribute";
-static NSString* const LogEventWithOneSecondAndAttributes = @"logEventWithOneSecondAndAttributes";
-static NSString* const LogEventWithDurationTimeAndAttributes = @"logEventWithDurationTimeAndAttributes";
-static NSString* const PageviewStartWithName = @"pageviewStartWithName";
-static NSString* const PageviewEndWithName = @"pageviewEndWithName";
+static NSString* const StartBaiduMobileStat = @"StartBaiduMobileStat";
+static NSString* const SetDebug = @"SetDebug";
+static NSString* const LogEvent = @"LogEvent";
+static NSString* const LogEventWithDurationTime = @"LogEventWithDurationTime";
+static NSString* const LogEventWithOneSecond = @"LogEventWithOneSecond";
+static NSString* const LogEventWithAttribute = @"LogEventWithAttribute";
+static NSString* const LogEventWithOneSecondAndAttributes = @"LogEventWithOneSecondAndAttributes";
+static NSString* const LogEventWithDurationTimeAndAttributes = @"LogEventWithDurationTimeAndAttributes";
+static NSString* const PageviewStartWithName = @"PageviewStartWithName";
+static NSString* const PageviewEndWithName = @"PageviewEndWithName";
 
-@interface FlutterMtjPlugin () {
+@interface FluttermtjPlugin () {
     BOOL eventState;
     BOOL eventAttributeState;
 }
@@ -35,22 +35,19 @@ static NSString* const PageviewEndWithName = @"pageviewEndWithName";
   
   if([method isEqualToString:StartBaiduMobileStat]){
     NSString* appId = arguments[0];
-    argumentSetNSNullToNil(appId);
+    //argumentSetNSNullToNil(appId);
     [statTracker startWithAppId:appId];
-    return (nil);
   } else if([method isEqualToString: SetDebug]) {
     BOOL isOn = arguments[0];
-    argumentSetNSNullToNil(isOn);
+    //argumentSetNSNullToNil(isOn);
     statTracker.enableDebugOn  = isOn;
-    return (nil);
   } else if([method isEqualToString: LogEvent]){
     NSString * eventId = arguments[0];
-    argumentSetNSNullToNil(eventId);
+    //argumentSetNSNullToNil(eventId);
     [statTracker logEvent:eventId];
-    return (nil);
   } else if([method isEqualToString: LogEventWithDurationTime]){
     NSString * eventId = arguments[0];
-    argumentSetNSNullToNil(eventId);
+    //argumentSetNSNullToNil(eventId);
     if(!eventState) {
         eventState = YES;
         [statTracker eventStart:eventId];
@@ -60,31 +57,29 @@ static NSString* const PageviewEndWithName = @"pageviewEndWithName";
     }
   } else if([method isEqualToString: LogEventWithOneSecond]){
     NSString * eventId = arguments[0];
-    argumentSetNSNullToNil(eventId);
+    //argumentSetNSNullToNil(eventId);
     [statTracker logEventWithDurationTime:eventId durationTime:1000];
-    return (nil);
   } else if([method isEqualToString: LogEventWithAttribute]){
     NSString * eventId = arguments[0];
     NSDictionary* attribute = arguments[1];
-    argumentSetNSNullToNil(eventId);
-    argumentSetNSNullToNil(attribute);
+    //argumentSetNSNullToNil(eventId);
+    //argumentSetNSNullToNil(attribute);
 
     [statTracker logEvent:eventId attributes:attribute];
-    return (nil);
-  } else if([method isEqualToString: LogEventWithOneSecondAndAttributes]{
+
+  } else if([method isEqualToString: LogEventWithOneSecondAndAttributes]){
     NSString * eventId = arguments[0];
     NSDictionary* attribute = arguments[1];
-    argumentSetNSNullToNil(eventId);
-    argumentSetNSNullToNil(attribute);
+    //argumentSetNSNullToNil(eventId);
+    //argumentSetNSNullToNil(attribute);
 
     [statTracker logEventWithDurationTime:eventId durationTime:1000 attributes:attribute];
-    return (nil);
-  } else if([method isEqualToString: LogEventWithDurationTimeAndAttributes]{
+  } else if([method isEqualToString: LogEventWithDurationTimeAndAttributes]){
     NSString * eventId = arguments[0];
     NSDictionary* attribute = arguments[1];
 
-    argumentSetNSNullToNil(eventId);
-    argumentSetNSNullToNil(attribute);
+    //argumentSetNSNullToNil(eventId);
+    //argumentSetNSNullToNil(attribute);
 
     if(!eventAttributeState) {
         eventAttributeState = YES;
@@ -93,18 +88,15 @@ static NSString* const PageviewEndWithName = @"pageviewEndWithName";
         eventAttributeState = NO;
         [statTracker eventEnd:eventId attributes:attribute];
     }
-    return (nil);
+
   } else if([method isEqualToString:PageviewStartWithName]){
     NSString * pageName = arguments[0];
-    argumentSetNSNullToNil(pageName);
+    //argumentSetNSNullToNil(pageName);
     [statTracker pageviewStartWithName:pageName];
-
-    return (nil);
   } else if([method isEqualToString:PageviewEndWithName]){
     NSString * pageName = arguments[0];
-    argumentSetNSNullToNil(pageName);
+    //argumentSetNSNullToNil(pageName);
     [statTracker pageviewEndWithName:pageName];
-    return (nil);
   } else {
     result(FlutterMethodNotImplemented);
   }
