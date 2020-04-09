@@ -104,6 +104,13 @@ public class FluttermtjPlugin implements FlutterPlugin, MethodCallHandler {
         StatService.onEventDuration(mContext,eventId, "LogEventWithOneSecond", 1000);
       }
       break;
+      case "LogEventWithNumberOfTime": {
+        String eventId = (String) list.get(0);
+        eventId = eventId == null ? "" : eventId;
+        int time = (int) list.get(1);
+        time = time == 0 ? 1 : time;
+        StatService.onEvent(mContext, eventId, "LogEventWithNumberOfTime", time);
+      }
       case "LogEventWithAttribute":
       {
         String eventId = (String) list.get(0);
